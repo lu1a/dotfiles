@@ -53,8 +53,8 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    layout = "fi";
+    variant = "mac";
   };
 
   # Enable CUPS to print documents.
@@ -162,6 +162,10 @@
     signal-desktop-beta
     unzip
     fzf
+    mosh
+    zig
+    zls
+    python3
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
