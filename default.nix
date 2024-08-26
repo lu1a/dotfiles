@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -90,7 +86,6 @@
     ];
   };
   home-manager.users.lewis = { pkgs, ... }: {
-#    home.packages = [ pkgs.neovim ];
     programs.fzf.enable = true;
     programs.bash = {
       enable = true;
@@ -112,7 +107,13 @@
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig
         nvim-treesitter.withAllGrammars
+        coc-nvim
+        coc-pyright
       ];
+
+#      coc.settings = {
+#        "zig.path" = "zls";
+#      };
 
       extraConfig = ''
         set number
@@ -129,7 +130,7 @@
         set incsearch
         set hlsearch
         set clipboard=unnamedplus
-        " colorscheme default
+        colorscheme blue 
         filetype plugin on
         filetype indent on
         set numberwidth=5
@@ -137,15 +138,11 @@
       '';
     };
 
-    # The state version is required and should stay at the version you
-    # originally installed.
-    home.stateVersion = "24.05";
+    home.stateVersion = "24.11";
   };
 
-  # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -166,6 +163,7 @@
     zig
     zls
     python3
+    nodejs_22
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -178,7 +176,6 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   # Open ports in the firewall.
@@ -202,11 +199,6 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-#    vimdiffAlias = true;
-#    plugins = with pkgs.vimPlugins; [
-#      nvim-lspconfig
-#      nvim-treesitter.withAllGrammars
-#    ];
     configure = {
       customRC = ''
         set number
@@ -223,12 +215,12 @@
         set incsearch
         set hlsearch
         set clipboard=unnamedplus
-        " colorscheme default
+        colorscheme blue 
         filetype plugin on
         filetype indent on
         set numberwidth=5
         set signcolumn=yes
       '';
     };
-  };  
+  };
 }
