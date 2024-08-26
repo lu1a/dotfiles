@@ -107,13 +107,18 @@
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig
         nvim-treesitter.withAllGrammars
-        coc-nvim
+#        coc-nvim
         coc-pyright
       ];
 
-#      coc.settings = {
-#        "zig.path" = "zls";
-#      };
+      coc = {
+        enable = true;
+        settings = {
+          "zig.enabled" = true;
+          "zig.startUpMessage" = false;
+          "zig.path" = "/run/current-system/sw/bin/zls";
+        };
+      };
 
       extraConfig = ''
         set number
@@ -135,6 +140,15 @@
         filetype indent on
         set numberwidth=5
         set signcolumn=yes
+      '';
+    };
+
+    programs.tmux = {
+      enable = true;
+      extraConfig = ''
+        set -g mouse on
+        setw -g mode-keys vi
+        bind-key - split-window -v
       '';
     };
 
