@@ -1,2 +1,3 @@
 # dotfiles
-Fine.. I'll try NixOS
+
+Configs and random things for general use.
