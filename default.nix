@@ -41,7 +41,9 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  # programs.hyprland.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -53,10 +55,8 @@
     variant = "mac";
   };
 
-  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -82,7 +82,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
   home-manager.users.lewis = { pkgs, ... }: {
@@ -107,7 +106,6 @@
       plugins = with pkgs.vimPlugins; [
         nvim-lspconfig
         nvim-treesitter.withAllGrammars
-#        coc-nvim
         coc-pyright
       ];
 
