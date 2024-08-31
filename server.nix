@@ -122,7 +122,7 @@
     enable = true;
     settings = {
       HiddenServiceDir = "/var/lib/tor/monero-service";
-      HiddenServicePort = "18081 127.0.0.18081";
+      HiddenServicePort = "18081 127.0.0.1:18081";
     };
   };
   services.nginx = {
