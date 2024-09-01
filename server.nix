@@ -128,10 +128,34 @@
   services.nginx = {
     enable = true;
     enableReload = true;
+    virtualHosts."localhost" = {
+      root = "/var/www/example";
+    };
     virtualHosts."lu1.sh" = {
+      addSSL = true;
+      enableACME = true;
       root = "/var/www/lewis";
     };
+    virtualHosts."lewistorrington.fi" = {
+      addSSL = true;
+      enableACME = true;
+      root = "/var/www/lewis";
+    };
+    virtualHosts."heleneil.com" = {
+      addSSL = true;
+      enableACME = true;
+      root = "/var/www/helene";
+    };
+    virtualHosts."blormo.com" = {
+      addSSL = true;
+      enableACME = true;
+      root = "/var/www/agnes";
+    };
   };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "acme.limb074@passinbox.com";
+  }; 
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 18081 ];
@@ -139,6 +163,12 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
   environment.variables.EDITOR = "nvim";
