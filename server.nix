@@ -10,7 +10,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "web-server"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -19,6 +19,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Helsinki";
@@ -129,22 +131,17 @@
     enable = true;
     enableReload = true;
     virtualHosts."localhost" = {
-      root = "/var/www/example";
+      root = "/var/www/lewis/sites/example";
     };
     virtualHosts."lu1.sh" = {
       addSSL = true;
       enableACME = true;
-      root = "/var/www/lewis";
-    };
-    virtualHosts."lewistorrington.fi" = {
-      addSSL = true;
-      enableACME = true;
-      root = "/var/www/lewis";
+      root = "/var/www/lewis/sites/lu1.sh";
     };
     virtualHosts."heleneil.com" = {
       addSSL = true;
       enableACME = true;
-      root = "/var/www/helene";
+      root = "/var/www/helene/portfolio-website";
     };
     virtualHosts."blormo.com" = {
       addSSL = true;
@@ -155,11 +152,31 @@
   security.acme = {
     acceptTerms = true;
     defaults.email = "acme.limb074@passinbox.com";
-  }; 
+  };
+
+  services.ddclient = {
+    enable = true;
+    usev4 = "webv4, webv4=dynamicdns.park-your-domain.com/getip";
+    protocol = "namecheap";
+    server = "dynamicdns.park-your-domain.com";
+    extraConfig = ''
+      login=lu1.sh
+      password=
+      @
+
+      login=blormo.com
+      password=
+      @
+
+      login=heleneil.com
+      password=
+      @
+    '';
+  };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 18081 ];
-  networking.firewall.allowedUDPPorts = [ 80 443 18081 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 18081 60000 ];
+  networking.firewall.allowedUDPPorts = [ 22 80 443 18081 60000 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
